@@ -2,22 +2,16 @@
 import random
 import time
 
-counter = 0
+counter = 0                                                 # считает, сколько вставок по буквам осталось
 
 
-def create_cell(letter=' '):
+def create_cell(letter=' '):                                # создает рамки для ячеек
     cell_borders = [['|‾', '‾', '‾|'], [
         '|', f' {letter} ', '|'], ['|_', '_', '_|']]
-    """
-    for i in range(3):
-        for j in range(3):
-            print(cell_borders[i][j], end=' ')
-        print()
-    """
     return cell_borders
 
 
-def rearrange_array(input_array):
+def rearrange_array(input_array):                           # создает поле для вставки букв под конкретное слово
     new_vec = []
     new_vec2 = []
     new_vec3 = []
@@ -49,7 +43,7 @@ def rearrange_array(input_array):
     return input_array
 
 
-def generate_word_table(word):
+def generate_word_table(word):                              # вставляет ячейки со значениями(или без) для образования слова
     some_list = []
     some_cell = create_cell()
     for i in range(len(word)):
@@ -57,7 +51,7 @@ def generate_word_table(word):
     return some_list
 
 
-questions = { \
+questions = { \                                             # вопросики
     'Какое животное обитает только в Китае?': 'Панда',
     'Какая птица питается только нектаром и мелкими насекомыми?': 'Колибри',
     'Как называются молодые рога марала, изюбря и пятнистого оленя?': 'Панты',
@@ -66,7 +60,7 @@ questions = { \
 }
 
 
-def insert_letter():
+def insert_letter():                                        # угадываем буквы
     global counter
     global player_one_moves
     global player_two_moves
@@ -76,7 +70,7 @@ def insert_letter():
     global my_word
     my_cell = create_cell(letter)
 
-    if letter in word or letter.upper() in word:
+    if letter in word or letter.upper() in word:            # проверяем есть ли буква в слова во всех своих проявлениях(строчная и прописная)
         print('Поздравляю, вы отгадали букву!')
         print('Откройте букву')
         time.sleep(3)
@@ -84,7 +78,7 @@ def insert_letter():
             if word[i] == letter or word[i] == letter.upper():
                 my_word[i] = my_cell
                 counter = counter + 1
-    else:
+    else:                                                   # если буквы нету, ход переходит другому игроку
         print('Этой буквы в слове нет!')
         if player_one_moves:
             player_two_moves=True
@@ -95,10 +89,10 @@ def insert_letter():
     return my_word
 
 
-points = [100, 200, 300, 500, 1000, 'банкрот']
+points = [100, 200, 300, 500, 1000, 'банкрот']              # барабан 
 
 
-def barrel_spin():
+def barrel_spin():                                          # функция вращения барабана
     global stand_player_one
     global stand_player_two
     global player_one_moves
@@ -133,21 +127,20 @@ def barrel_spin():
             print('Вы можете назвать букву!')
 
 
-stand_player_one = 0
-stand_player_two = 0
+stand_player_one = 0                                                                # счетчик очков игрок 1
+stand_player_two = 0                                                                # счетчик очков игрок 2
 
-player_one_moves = False
-player_two_moves = False
-quest = random.choice(list(questions.keys()))
-word = questions[quest]
-my_word = generate_word_table(word)
+player_one_moves = False                                                            # ход игрок 1
+player_two_moves = False                                                            # ход игрок 2    
+quest = random.choice(list(questions.keys()))                                       # выбор вопроса рандомно
+word = questions[quest]                                                             # ответ на вопрос
+my_word = generate_word_table(word)                                                 # генератор поля под вопрос
 
-name_player_one = input('Игрок 1, введите Ваше имя: ')
-name_player_two = input('А теперь поприветствуем игрока 2, которого зовут: ')
+name_player_one = input('Игрок 1, введите Ваше имя: ')                              # имя игрок 1
+name_player_two = input('А теперь поприветствуем игрока 2, которого зовут: ')       # имя игрок 2
 
-quest = random.choice(list(questions.keys()))
-word = questions[quest]
-my_word = generate_word_table(word)
+# начало игры
+
 print('Добрый вечер, дамы и господа, поприветствуем первую и единственную двойку игроков!')
 time.sleep(2)
 print(f'Приветствуем вас, {name_player_one} и {name_player_two}!')
